@@ -178,3 +178,7 @@ with tab3:
     ax3.set_xlabel("Number of Visitors")
     
     st.pyplot(fig3, use_container_width=False)
+
+# --- FOOTER ---
+st.markdown("---")
+st.caption("© 2024 Tourism Analytics Inc. | developed by Vadla Shiva Kumar")
