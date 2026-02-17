@@ -181,4 +181,4 @@ with tab3:
 
 # --- FOOTER ---
 st.markdown("---")
-st.caption("© 2024 Tourism Analytics Inc. | developed by Vadla Shiva Kumar")
+st.caption("© 2026 Tourism Analytics Inc. | developed by Vadla Shiva Kumar")
