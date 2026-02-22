@@ -127,24 +127,30 @@ with tab2:
         sim_scores = item_similarity_df.dot(user_ratings)
         sim_scores = sim_scores.drop(visited_attractions, errors='ignore')
         
+        # Get the top attraction IDs
         top_attractions_ids = sim_scores.sort_values(ascending=False).head(num_recs).index
-        recommendations = df[df['AttractionId'].isin(top_attractions_ids)][['AttractionName', 'AttractionType', 'AttractionCity']].drop_duplicates()
         
-        st.write(f"### Top {num_recs} Attractions for {user_display_names[user_id]}:")
+        # 1. ADD 'AttractionAvgRating' to the list of columns we pull from the dataframe
+        recommendations = df[df['AttractionId'].isin(top_attractions_ids)][
+            ['AttractionName', 'AttractionType', 'AttractionCity', 'AttractionAvgRating']
+        ].drop_duplicates()
         
         # --- Make the result look professional ---
         
-        # 1. Reset the index so we don't see those random row numbers
+        # Reset the index so we don't see random row numbers
         recommendations = recommendations.reset_index(drop=True)
         
-        # 2. Rename columns to look cleaner
-        recommendations.columns = ["Attraction Name", "Category", "City"]
+        # 2. ADD "Rating" to the clean column headers
+        recommendations.columns = ["Attraction Name", "Category", "City", "Rating"]
         
-        # 3. Use st.dataframe with hide_index=True for a modern, interactive look
+        # 3. Format the rating to 1 decimal place (e.g., 4.5) to look professional
+        recommendations["Rating"] = recommendations["Rating"].round(1)
+        
+        # Display the table
         st.dataframe(
             recommendations, 
             hide_index=True, 
-            width=1000,
+            width=900
         )
 
 # ==========================================
